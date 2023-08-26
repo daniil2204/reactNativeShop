@@ -34,6 +34,12 @@ export const login = createAsyncThunk('user/login', async (params) => {
                 imageUrl
                 title
             }
+            desireItems {
+                itemId
+                price
+                imageUrl
+                title
+            }
         }
     }`
     const data = await makeRequest(login);
@@ -45,17 +51,23 @@ export const register = createAsyncThunk('user/register', async (params) => {
     const {email,username,password,phone} = params;
     const register = `mutation register{
         register(username:"${username}",email:"${email}",password:"${password}",phone:"${phone}"){
-          id
-          email
-          role
-          username
-          password
-          phone
-          token
-          bucket{
+            id
+            email
+            role
+            username
+            password
+            phone
+            token
+            bucket{
                 price
                 count
                 itemId
+                imageUrl
+                title
+            }
+            desireItems {
+                itemId
+                price
                 imageUrl
                 title
             }
@@ -76,6 +88,16 @@ export const changeBucket = createAsyncThunk('user/changeBucket', async (params)
     return data;
 })
 
+export const changeDesire = createAsyncThunk('user/changeDesire', async (params) => {
+    const {itemId,token} = params;
+    const desireItem = `mutation changeDesireList {
+        changeDesireList(itemId:"${itemId}")
+    }`
+    
+    const data = await makeRequest(desireItem,token);
+    return data;
+})
+
 
 const userSlice = createSlice({
     name:'user',
@@ -84,9 +106,11 @@ const userSlice = createSlice({
         logOut(state) {
             state.data = {
                 bucket:[],
-                desire:[]
+                desireItems:[]
             };
             state.auth = false;
+            state.isItemPage = false;
+            state.loading = false;
         },
         changeItemCountInBucket(state,action) {
             const {id,price,count,imageUrl,operation,title} = action.payload;
@@ -116,7 +140,7 @@ const userSlice = createSlice({
             state.data.desireItems = [...state.data.desireItems,action.payload];
         },
         remoweItemFromDesire(state,action) {
-            state.data.desireItems = [...state.data.desireItems.filter(item => item.id !== action.payload)];
+            state.data.desireItems = [...state.data.desireItems.filter(item => item.itemId !== action.payload)];
         },
         setIsItemPage(state,action) {
             state.isItemPage = action.payload;

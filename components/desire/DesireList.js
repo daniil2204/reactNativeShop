@@ -6,9 +6,11 @@ export default function DesireList({navigation}) {
 
     const desire = useSelector(state => state.user.data.desireItems);
 
+
+
     const renderItem = ({item}) => {
         return (
-            <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate('Item',{itemId:item.id})}>
+            <TouchableOpacity style={styles.itemContainer} onPress={() => navigation.navigate('Item',{itemId:item.itemId})}>
                 <Image style={styles.image} source={{uri:item.imageUrl}}/>
                 <Text style={styles.itemText}>{item.title}</Text>
             </TouchableOpacity>

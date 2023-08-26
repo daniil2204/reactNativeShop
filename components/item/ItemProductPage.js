@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 
 export default function ItemProductPage({itemId,item,token}) {
 
-
     return (
         <View style={styles.item}>
             <Image style={styles.image} source={{uri:item.imageUrl}}/>
