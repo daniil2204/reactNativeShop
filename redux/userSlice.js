@@ -1,6 +1,7 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import { makeRequest } from '../utils/graphqlRequest' 
 import { checkPayload } from "../utils/checkPayload";
+import SyncStorage from 'sync-storage';
 
 
 
@@ -15,6 +16,9 @@ const initialState = {
     isItemPage: false,
 }
 
+const saveTokenInLocal = (token) => {
+    SyncStorage.set('token', token);
+}
 
 
 export const login = createAsyncThunk('user/login', async (params) => {
@@ -43,6 +47,7 @@ export const login = createAsyncThunk('user/login', async (params) => {
         }
     }`
     const data = await makeRequest(login);
+    saveTokenInLocal(data.data.login.token)
     return data;
 
 })
@@ -55,7 +60,6 @@ export const register = createAsyncThunk('user/register', async (params) => {
             email
             role
             username
-            password
             phone
             token
             bucket{
@@ -75,26 +79,36 @@ export const register = createAsyncThunk('user/register', async (params) => {
       }`
     
     const data = await makeRequest(register);
+    saveTokenInLocal(data.data.register.token)
     return data;
 })
 
-export const changeBucket = createAsyncThunk('user/changeBucket', async (params) => {
-    const {itemId,token,count} = params;
-    const bucketItem = `mutation addItemToBucket {
-        addItemToBucket(count:${count},itemId:"${itemId}")
-      }`
-    
-    const data = await makeRequest(bucketItem,token);
-    return data;
-})
 
-export const changeDesire = createAsyncThunk('user/changeDesire', async (params) => {
-    const {itemId,token} = params;
-    const desireItem = `mutation changeDesireList {
-        changeDesireList(itemId:"${itemId}")
+export const getMe = createAsyncThunk('user/getMe', async (token) => {
+    const user = `query getMe{
+        getMe{
+            id
+            email
+            role
+            username
+            phone
+            token
+            bucket{
+                price
+                count
+                itemId
+                imageUrl
+                title
+            }
+            desireItems {
+                itemId
+                price
+                imageUrl
+                title
+            }
+        }
     }`
-    
-    const data = await makeRequest(desireItem,token);
+    const data = await makeRequest(user,token);
     return data;
 })
 
@@ -164,6 +178,16 @@ const userSlice = createSlice({
             state.loading = false;
             if (checkPayload(action.payload)) {
                 state.data = action.payload.data.register;        
+                state.auth = true;
+            }           
+        }),
+        builder.addCase(getMe.pending, (state) => {
+            state.loading = true;
+        }),
+        builder.addCase(getMe.fulfilled, (state, action) => {
+            state.loading = false;
+            if (checkPayload(action.payload)) {
+                state.data = action.payload.data.getMe;        
                 state.auth = true;
             }           
         })

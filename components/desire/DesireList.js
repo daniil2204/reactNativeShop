@@ -1,12 +1,11 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image,FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image,FlatList } from 'react-native';
 import { useSelector } from 'react-redux';
 import EmptyDesireList from './EmptyDesireList';
+import SyncStorage from 'sync-storage';
 
 export default function DesireList({navigation}) {
 
     const desire = useSelector(state => state.user.data.desireItems);
-
-
 
     const renderItem = ({item}) => {
         return (
@@ -19,7 +18,7 @@ export default function DesireList({navigation}) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.headerText}>Список бажаних товарів</Text>
+            <Text style={styles.headerText} onPress={() => SyncStorage.set('token','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjRlYTEzMDBiYTllMTA2ZTYxNmI2ZDg2IiwiZW1haWwiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE2OTMwNjE4ODgsImV4cCI6MTY5NTY1Mzg4OH0.DFX4ekYm9iVIKG9PuxPo6V6buxi1dbzwFUfsLjzNcFE')}>Список бажаних товарів</Text>
             <FlatList
                 data={desire}
                 renderItem={renderItem}

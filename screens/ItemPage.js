@@ -7,7 +7,8 @@ import ItemCharacteristicPage from '../components/item/ItemCharacteristicPage';
 import ItemFooter from '../components/item/ItemFooter';
 import { getItemById } from '../utils/getItemById';
 import { changeItemCountInBucket,addItemToDesire,setIsItemPage,remoweItemFromDesire } from '../redux/userSlice';
-import { changeBucket,changeDesire } from '../redux/userSlice';
+import { changeBucket } from '../utils/changeBucket';
+import { changeDesire } from '../utils/changeDesire';
 
 
 export default function ItemPage({ route,navigation }) {
@@ -59,7 +60,7 @@ export default function ItemPage({ route,navigation }) {
 
     const addItemToBucket = () => {
         dispatch(changeItemCountInBucket({count:count + 1,price:item.price * (count + 1),id:itemId,imageUrl:item.imageUrl,title:item.title}))
-        token ?  dispatch(changeBucket({itemId: itemId,count: count + 1,token: token})) : null;
+        token ?  changeBucket({itemId: itemId,count: count + 1,token: token}) : null;
         setCount(count => count + 1);
     }
 
@@ -71,7 +72,7 @@ export default function ItemPage({ route,navigation }) {
             dispatch(addItemToDesire({itemId:itemId,imageUrl:item.imageUrl,title:item.title}))
             setIsDesire(true);
         }
-        token ? dispatch(changeDesire({itemId,token})) : null;
+        token ? changeDesire({itemId,token}) : null;
     }
 
     const checkIsDesireItem = () => {

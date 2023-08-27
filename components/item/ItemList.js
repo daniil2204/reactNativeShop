@@ -1,14 +1,14 @@
 import {useState, useEffect} from 'react';
-import {FlatList,StyleSheet,Text,ActivityIndicator,View,} from 'react-native';
-import { useSelector } from 'react-redux';
+import {FlatList,StyleSheet,Text,ActivityIndicator,View,RefreshControl} from 'react-native';
 import { getItems } from '../../utils/getItems'
+import Error from '../Error';
 import ItemCardForList from './ItemCardForList';
+import { isError } from '../../utils/isError';
 
 
 
-export default function ItemList ({navigation}) {
 
-  const loading = useSelector(state => state.user.loading);
+export default function ItemList ({navigation,refreshing}) {
 
   const [offset,setOffset] = useState(0)
   const [error,setError] = useState(false);
@@ -16,23 +16,33 @@ export default function ItemList ({navigation}) {
 
   const fetchItems = async () => {
     const data = await getItems(offset,3)
-    return data;
+    if(isError(data)){
+      setError(true);
+    }else return data;
   }
 
   const setFetchedItems = async () => {
     fetchItems()
       .then(res => setItems([...items,...res.data.getItems])) 
       .then(() => {
-        const newOffset = offset + 3;
-        setOffset(newOffset)
-        setItemsParams()
+        if (refreshing) {
+          setItems([]);
+          setOffset(0);       
+          setError(false);
+        }else{
+          const newOffset = offset + 3;
+          setOffset(newOffset)
+        }
+
       })
-      .catch(err => setError(true));
+      .catch(err => {
+        setError(true);
+      });
   }
 
   useEffect(() => {
-    setFetchedItems();
-  },[])
+    setFetchedItems()
+  },[refreshing])
 
   const renderItem = ({item}) => {
     return (
@@ -45,15 +55,21 @@ export default function ItemList ({navigation}) {
 
   return (
       <View style={styles.container}>
-        <Text style={styles.title}>Наші товари</Text>
-        {loading ? <ActivityIndicator color="green" size="large"/> : <FlatList
-            data={items}
-            renderItem={renderItem}
-            onEndReached={offset !== 6 ? setFetchedItems : null}
-            keyExtractor={item => item.id}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-        />}
+        <Text style={styles.title} onPress={() => console.log(offset)}>Наші товари</Text>
+        <View style={styles.listContainer}>
+          {!error ? 
+            <FlatList
+                data={items}
+                renderItem={renderItem}
+                onEndReached={offset === 6 ? () => {} : setFetchedItems}
+                keyExtractor={item => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                ListEmptyComponent={<ActivityIndicator size={'large'} color={'green'}/>}
+            /> : 
+            <Error text="Вибачте, сталася помилка"/>
+          }
+        </View>
       </View>
   );
 };
@@ -62,15 +78,12 @@ const styles = StyleSheet.create({
   container: {
     marginTop:20,
   },
-  item: {
-    borderWidth:1,
-    borderColor:'white',
-    height:200,
-    width:150
-  },
   title: {
     fontSize: 32,
     color:'white',
   },
+  listContainer: {
+    alignItems:'center'
+  }
 });
 

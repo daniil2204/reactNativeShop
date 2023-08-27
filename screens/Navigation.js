@@ -17,7 +17,7 @@ const Navigation = () => {
     return (
         <NavigationContainer>
             <Layout>
-                <Stack.Navigator>
+                <Stack.Navigator initialRouteName="Desire">
                     <Stack.Screen name="Main" component={MainPage} options={{ headerShown: false,animation:"fade" }}/>
                     <Stack.Screen name="Search" component={SearchPage} options={{ headerShown: false,animation:"fade" }}/>
                     <Stack.Screen name="Auth" component={AuthPage} options={{ headerShown: false,animation:"fade" }}/>

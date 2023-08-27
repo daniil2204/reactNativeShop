@@ -3,7 +3,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { useState } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import { deleteItemFromBucket,changeItemCountInBucket } from '../../redux/userSlice';
-import { changeBucket } from '../../redux/userSlice';
+import { changeBucket } from '../../utils/changeBucket';
 
 
 
@@ -38,7 +38,7 @@ export default function BucketItem({item}) {
             }    
         }
         dispatch(changeItemCountInBucket({id:item.itemId,count: changedCount, price: changedPrice,operation}))
-        token ?  dispatch(changeBucket({itemId: item.itemId,count: changedCount,token: token})) : null;
+        token ?  changeBucket({itemId: item.itemId,count: changedCount,token: token}) : null;
     }
 
     return (

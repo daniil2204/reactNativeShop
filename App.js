@@ -5,7 +5,9 @@ import Navigation from './screens/Navigation';
 import { Provider } from 'react-redux';
 import store from './redux';
 
+
 export default function App() {
+  
   return (
       <Provider store={store}>
         <Navigation />
@@ -13,7 +15,3 @@ export default function App() {
   
   );
 }
-
-const styles = StyleSheet.create({
-  
-});
