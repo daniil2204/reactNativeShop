@@ -1,14 +1,19 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 
-export default function ItemFooter({navigation,addItemToDesireList,addItemToBucket,isDesire}) {
+export default function ItemFooter({navigation,addItemToDesireList,addItemToBucket,isDesire,isBucket}) {
 
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.icon} onPress={addItemToDesireList}>
-                <AntDesign  name="heart" size={32} color={isDesire ? "green" : "white"}/>
-            </TouchableOpacity>
+            <View style={{flexDirection:'row'}}>
+                <TouchableOpacity style={styles.icon} onPress={addItemToDesireList}>
+                    <AntDesign  name="heart" size={32} color={isDesire ? "green" : "white"}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.icon} onPress={addItemToBucket}>
+                    <AntDesign  name="shoppingcart" size={32} color={isBucket ? "green" : "white"}/>
+                </TouchableOpacity>
+            </View>
             <TouchableOpacity style={styles.button} onPress={addItemToBucket}>
                 <Text style={styles.text}>Додати в кошик</Text>
             </TouchableOpacity>

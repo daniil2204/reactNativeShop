@@ -11,7 +11,7 @@ export default function SearchPage({navigation}) {
 
     const changeValue = async (newValue) => {
         setValue(newValue);
-        if (newValue.length > 2) {
+        if (newValue.length > 0) {
             const query = `query getCategoriesByTitle{
                 getCategoriesByCategoryTitle(category:"${newValue}"){
                 categories

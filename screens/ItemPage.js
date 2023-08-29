@@ -1,20 +1,17 @@
 import { StyleSheet, Text, View,FlatList,TouchableOpacity,ActivityIndicator} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState,useEffect } from 'react';
-import ItemProductPage from '../components/item/ItemProductPage';
-import ItemReviwsPage from '../components/item/ItemReviewsPage';
-import ItemCharacteristicPage from '../components/item/ItemCharacteristicPage';
-import ItemFooter from '../components/item/ItemFooter';
-import { getItemById } from '../utils/getItemById';
+
+import { ItemProductPage,ItemReviewsPage,ItemCharacteristicPage,ItemFooter } from '../components/item/index';
+
 import { changeItemCountInBucket,addItemToDesire,setIsItemPage,remoweItemFromDesire } from '../redux/userSlice';
-import { changeBucket } from '../utils/changeBucket';
-import { changeDesire } from '../utils/changeDesire';
+
+import { changeBucket,changeDesire,fetchItemById,fetchReviewsById } from '../utils/index';
+
+import Error from '../components/Error';
 
 
 export default function ItemPage({ route,navigation }) {
-
-
-
     const token = useSelector(state => state.user.data.token);
     const bucket = useSelector(state => state.user.data.bucket);
     const desire = useSelector(state => state.user.data.desireItems);
@@ -31,20 +28,11 @@ export default function ItemPage({ route,navigation }) {
     const [loading,setLoading] = useState(false);
     const [reviews,setReviews] = useState([]);
     const [isDesire,setIsDesire] = useState(false);
-
-    const fetchItemById = async () => {
-        const data = await getItemById(itemId)
-        return data;
-    }
-
-    const fetchReviewsById = async () => {
-        const data = await getItemById(itemId,true)
-        return data;
-    }
+    const [isBucket,setIsBucket] = useState(false);
     
     const setFetchedReviews = async () => {
         setLoading(true);
-        fetchReviewsById()
+        fetchReviewsById(itemId)
             .then(res => setReviews(res.reviews))
             .then(loading => setLoading(false)) 
             .catch(err => setError(true));
@@ -52,7 +40,7 @@ export default function ItemPage({ route,navigation }) {
     
     const setFetchedItem = async () => {
         setLoading(true);
-        fetchItemById()
+        fetchItemById(itemId)
             .then(res => setItem(res))
             .then(loading => setLoading(false)) 
             .catch(err => setError(true));
@@ -62,6 +50,7 @@ export default function ItemPage({ route,navigation }) {
         dispatch(changeItemCountInBucket({count:count + 1,price:item.price * (count + 1),id:itemId,imageUrl:item.imageUrl,title:item.title}))
         token ?  changeBucket({itemId: itemId,count: count + 1,token: token}) : null;
         setCount(count => count + 1);
+        setIsBucket(true);
     }
 
     const addItemToDesireList = () => {
@@ -80,10 +69,16 @@ export default function ItemPage({ route,navigation }) {
         desireItem ? setIsDesire(true) : null;
     }
 
+    const checkIsBucketItem = () => {
+        const bucketItem = bucket.find(bucketItem => bucketItem.itemId === itemId);
+        bucketItem ? setIsBucket(true) : null;
+    }
+
     useEffect(() => {
         dispatch(setIsItemPage(true))
         setFetchedItem();
-        checkIsDesireItem()
+        checkIsDesireItem();
+        checkIsBucketItem();
         if (token || bucket.length) {
             const countFromRedux = bucket.find((bucketElem => bucketElem.itemId === itemId));
             setCount(countFromRedux ? countFromRedux.count : 0);
@@ -92,6 +87,17 @@ export default function ItemPage({ route,navigation }) {
             dispatch(setIsItemPage(false))
         }
     },[])
+
+    const changeBtn = async (pressed) => {    
+        if (pressed === 'reviews' && !reviews.length) {
+            await setFetchedReviews();
+        }
+        setOnPress(pressed)
+    }
+
+    const addReview = () => {
+        navigation.navigate('AddReview',{itemId:itemId});
+    }
 
     const btns = [
         {
@@ -109,12 +115,7 @@ export default function ItemPage({ route,navigation }) {
         
     ]
 
-    const changeBtn = async (pressed) => {    
-        if (pressed === 'reviews' && !reviews.length) {
-            await setFetchedReviews();
-        }
-        setOnPress(pressed)
-    }
+    
 
     const renderItem = ({item}) => {
         return (
@@ -122,28 +123,34 @@ export default function ItemPage({ route,navigation }) {
                 <Text style={[styles.text,{color: onPress === item.pressed ? 'green' : 'white'}]}>{item.title.toUpperCase()}</Text>
             </TouchableOpacity>
         );
-      };
+    };
+
+
 
     return (
         
         <View style={styles.container}>
-            <View style={styles.btnContainer}>
-                <FlatList
-                    data={btns}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.pressed}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                />                
-            </View>
-            {!loading ? (
-                <>
-                    {onPress === 'product' && <ItemProductPage itemId={itemId} item={item} token={token} addItemToBucket={addItemToBucket}/>}
-                    {onPress === 'characteristic' && <ItemCharacteristicPage />}
-                    {onPress === 'reviews' &&  <ItemReviwsPage reviews={reviews}/>}
-                </>
-            ) : <ActivityIndicator color={'green'} size={'large'}/>}
-            <ItemFooter addItemToDesireList={addItemToDesireList} isDesire={isDesire} addItemToBucket={addItemToBucket}/>
+            {error ? <Error text="Виникла помилка"/> : 
+            <>
+                <View style={styles.btnContainer}>
+                    <FlatList
+                        data={btns}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.pressed}
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                    />                
+                </View>
+                {!loading ? (
+                    <>
+                        {onPress === 'product' && <ItemProductPage itemId={itemId} item={item} token={token} addItemToBucket={addItemToBucket}/>}
+                        {onPress === 'characteristic' && <ItemCharacteristicPage />}
+                        {onPress === 'reviews' &&  <ItemReviewsPage addReview={addReview} reviews={reviews}/>}
+                    </>
+                ) : <ActivityIndicator color={'green'} size={'large'}/>}
+                <ItemFooter addItemToDesireList={addItemToDesireList} isDesire={isDesire} isBucket={isBucket} addItemToBucket={addItemToBucket}/>
+            </>
+            }
         </View>
     );
 }

@@ -55,7 +55,7 @@ export default function ItemList ({navigation,refreshing}) {
 
   return (
       <View style={styles.container}>
-        <Text style={styles.title} onPress={() => console.log(offset)}>Наші товари</Text>
+        <Text style={styles.title}>Наші товари</Text>
         <View style={styles.listContainer}>
           {!error ? 
             <FlatList

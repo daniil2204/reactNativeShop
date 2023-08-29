@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, FlatList,ScrollView } from 'react-native';
 import EmptyReviewsPage from './EmptyReviewsPage';
+import { AntDesign } from '@expo/vector-icons'; 
 
-export default function ItemReviwsPage({reviews}) {
+export default function ItemReviwsPage({reviews,addReview}) {
 
     const renderItem = ({item}) => {
         return (
@@ -15,12 +16,18 @@ export default function ItemReviwsPage({reviews}) {
 
     return (
         <View style={styles.item}>
+            <TouchableOpacity style={styles.commentContainer} onPress={addReview}>
+                <Text style={[styles.userName,{textAlign:'center',color:'green'}]}>Додати власний відгук</Text>
+            </TouchableOpacity>
             <FlatList
                 data={reviews}
                 renderItem={renderItem}
                 keyExtractor={item => `${item.username} ${item.text}`}
                 ListEmptyComponent={EmptyReviewsPage}
             />
+            <View style={styles.addReview}>
+                <AntDesign name="pluscircle" size={36} color="green" />
+            </View>
         </View>
     );
 }
@@ -44,5 +51,12 @@ const styles = StyleSheet.create({
         fontSize:18,
         marginLeft:15,
         marginBottom:10
+    },
+    addReview: {
+        width:50,
+        height:50,
+        position:'absolute',
+        bottom:0,
+        right:0,
     }
 });
