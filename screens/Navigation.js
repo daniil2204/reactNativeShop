@@ -10,6 +10,7 @@ import Layout from "../components/Layout";
 import DesirePage from "./DesirePage";
 import ItemsByCategoryPage from "./ItemsByCategoryPage";
 import AddReviewPage from "./AddReviewPage";
+import UserNoAuth from "./UserNotAuthPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ const Navigation = () => {
                     <Stack.Screen name="ItemsByCategory" component={ItemsByCategoryPage} options={{ headerShown: false,animation:"fade" }}/>
                     <Stack.Screen name="Desire" component={DesirePage} options={{ headerShown: false,animation:"fade" }}/>
                     <Stack.Screen name="AddReview" component={AddReviewPage} options={{ headerShown: false,animation:"fade" }}/>
+                    <Stack.Screen name="UserNoAuth" component={UserNoAuth} options={{ headerShown: false,animation:"fade" }}/>
                 </Stack.Navigator>
             </Layout>
         </NavigationContainer>

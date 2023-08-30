@@ -1,13 +1,15 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image, FlatList,ScrollView } from 'react-native';
 import EmptyReviewsPage from './EmptyReviewsPage';
-import { AntDesign } from '@expo/vector-icons'; 
 
 export default function ItemReviwsPage({reviews,addReview}) {
 
     const renderItem = ({item}) => {
         return (
             <View style={styles.commentContainer}>
-                <Text style={styles.userName}>{item.username}</Text>
+                <View style={styles.titleWrapper}>
+                    <Text style={styles.userName}>{item.username}</Text>
+                    <Text style={styles.createdAt}>{item.createdAt}</Text>
+                </View>
                 <Text style={styles.commentText}>{item.text}</Text>
             </View>
         );
@@ -17,7 +19,7 @@ export default function ItemReviwsPage({reviews,addReview}) {
     return (
         <View style={styles.item}>
             <TouchableOpacity style={styles.commentContainer} onPress={addReview}>
-                <Text style={[styles.userName,{textAlign:'center',color:'green'}]}>Додати власний відгук</Text>
+                <Text style={[styles.userName,{textAlign:'center',color:'green',marginTop:15}]}>Додати власний відгук</Text>
             </TouchableOpacity>
             <FlatList
                 data={reviews}
@@ -25,9 +27,6 @@ export default function ItemReviwsPage({reviews,addReview}) {
                 keyExtractor={item => `${item.username} ${item.text}`}
                 ListEmptyComponent={EmptyReviewsPage}
             />
-            <View style={styles.addReview}>
-                <AntDesign name="pluscircle" size={36} color="green" />
-            </View>
         </View>
     );
 }
@@ -40,23 +39,23 @@ const styles = StyleSheet.create({
         borderWidth:1,
         borderBottomColor:'gray'
     },
+    titleWrapper: {
+        flexDirection:'row',
+        justifyContent:'space-between',
+        margin:15
+    },
     userName: {
         color:'white',
         fontSize:24,
-        marginLeft:15,
-        marginVertical:10
+    },
+    createdAt: {
+        color:'gray',
+        fontSize:14,
     },
     commentText: {
         color:'white',
         fontSize:18,
         marginLeft:15,
         marginBottom:10
-    },
-    addReview: {
-        width:50,
-        height:50,
-        position:'absolute',
-        bottom:0,
-        right:0,
     }
 });

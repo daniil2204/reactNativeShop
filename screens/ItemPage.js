@@ -96,7 +96,12 @@ export default function ItemPage({ route,navigation }) {
     }
 
     const addReview = () => {
-        navigation.navigate('AddReview',{itemId:itemId});
+        if (token) {
+            navigation.navigate('AddReview',{itemId:itemId});
+        }else{
+            navigation.navigate('UserNoAuth');
+        }
+        
     }
 
     const btns = [
