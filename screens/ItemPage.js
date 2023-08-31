@@ -149,7 +149,7 @@ export default function ItemPage({ route,navigation }) {
                 {!loading ? (
                     <>
                         {onPress === 'product' && <ItemProductPage itemId={itemId} item={item} token={token} addItemToBucket={addItemToBucket}/>}
-                        {onPress === 'characteristic' && <ItemCharacteristicPage />}
+                        {onPress === 'characteristic' && <ItemCharacteristicPage infoAbout={item.infoAbout}/>}
                         {onPress === 'reviews' &&  <ItemReviewsPage addReview={addReview} reviews={reviews}/>}
                     </>
                 ) : <ActivityIndicator color={'green'} size={'large'}/>}

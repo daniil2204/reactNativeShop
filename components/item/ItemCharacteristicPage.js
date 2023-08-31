@@ -1,21 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity,FlatList } from 'react-native';
 
-const data = [
-    {
-        title:'test',
-        test:'test',
-    },
-    {
-        title:'tes1t',
-        test:'test1',
-    },
-    {
-        title:'tes2t',
-        test:"tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-    }
-]
-
-export default function ItemCharacteristicPage() {
+export default function ItemCharacteristicPage({infoAbout}) {
 
 
     const renderItem = ({item,index}) => {
@@ -25,7 +10,7 @@ export default function ItemCharacteristicPage() {
                     <Text style={[styles.itemText,{color:'white'}]}>{item.title}</Text>
                 </View>
                 <View style={[styles.textContainer,{width:'70%'}]}>
-                    <Text style={[styles.itemText,{color:'green'}]}>{item.test} ₴</Text>
+                    <Text style={[styles.itemText,{color:'green',textAlign:'right',marginRight:10}]}>{item.text} ₴</Text>
                 </View> 
             </TouchableOpacity>
         );
@@ -34,7 +19,7 @@ export default function ItemCharacteristicPage() {
     return (
         <View>
             <FlatList
-                data={data}
+                data={infoAbout ? infoAbout : data}
                 renderItem={renderItem}
                 keyExtractor={item => item.title}
             />
