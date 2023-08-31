@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Button, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { useState } from 'react';
 import { useSelector,useDispatch } from 'react-redux';
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
         height:200,
         marginBottom:25,
         flexDirection:'row',
-        alignItems:'center'
+        alignItems:'center',
     },
     image: {
         width:150,

@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {FlatList,StyleSheet,Text,ActivityIndicator,View,RefreshControl} from 'react-native';
+import {FlatList,StyleSheet,Text,ActivityIndicator,View} from 'react-native';
 import { getItems } from '../../utils/getItems'
 import Error from '../Error';
 import ItemCardForList from './ItemCardForList';

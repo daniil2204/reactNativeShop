@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity,TextInput, FlatList } from 'react-native';
-import { useState, useMemo } from 'react';
+import { StyleSheet, View,TextInput } from 'react-native';
+import { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import InputItem from '../components/input/InputItem';
 import { makeRequest } from '../utils/graphqlRequest';

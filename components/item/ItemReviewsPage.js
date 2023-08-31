@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image, FlatList,ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
 import EmptyReviewsPage from './EmptyReviewsPage';
 
 export default function ItemReviwsPage({reviews,addReview}) {

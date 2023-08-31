@@ -1,10 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { Link } from '@react-navigation/native';
 
 
-export default function EmptyBucket({field}) {
+export default function EmptyBucket() {
     return (
         <View style={styles.container}>
             <AntDesign name="shoppingcart" size={150} color="white"/>

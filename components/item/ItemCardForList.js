@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 
 
 export default function ItemCardForList({item,navigation}) {

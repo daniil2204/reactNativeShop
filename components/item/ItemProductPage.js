@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 
-export default function ItemProductPage({itemId,item,token}) {
+export default function ItemProductPage({item}) {
 
     return (
         <View style={styles.item}>

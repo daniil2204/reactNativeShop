@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity,TextInput, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 
 export default function UserNoAuth({ navigation }) {

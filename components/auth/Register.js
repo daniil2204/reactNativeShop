@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Button, ActivityIndicator,KeyboardAvoidingView  } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, ActivityIndicator  } from 'react-native';
 import { Formik } from 'formik';
 import { initRegister,registerPlaceholder,registerArray,RegisterSchema } from '../../formik/register'
 import { useDispatch, useSelector } from 'react-redux';

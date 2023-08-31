@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 
-export default function ItemFooter({navigation,addItemToDesireList,addItemToBucket,isDesire,isBucket}) {
+export default function ItemFooter({addItemToDesireList,addItemToBucket,isDesire,isBucket}) {
 
 
     return (

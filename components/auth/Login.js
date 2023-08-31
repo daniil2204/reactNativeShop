@@ -1,6 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Button, ActivityIndicator } from 'react-native';
-import { Formik,Field } from 'formik';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput,  ActivityIndicator } from 'react-native';
+import { Formik } from 'formik';
 import { initLogin, loginPlaceholder, LoginSchema,loginArray } from '../../formik/login'
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../redux/userSlice';

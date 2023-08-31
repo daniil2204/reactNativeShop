@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View,FlatList,} from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { StyleSheet } from 'react-native';
 import DesireList from '../components/desire/DesireList';
 
 

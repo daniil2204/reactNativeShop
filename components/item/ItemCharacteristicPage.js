@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image,FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity,FlatList } from 'react-native';
 
 const data = [
     {
@@ -15,7 +15,7 @@ const data = [
     }
 ]
 
-export default function ItemCharacteristicPage({reviews}) {
+export default function ItemCharacteristicPage() {
 
 
     const renderItem = ({item,index}) => {

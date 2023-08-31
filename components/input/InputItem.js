@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity,TextInput, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 

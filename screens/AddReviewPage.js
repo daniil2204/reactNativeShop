@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View,FlatList,TextInput,TouchableOpacity,ActivityIndicator} from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { StyleSheet, Text, View,TextInput,TouchableOpacity,ActivityIndicator} from 'react-native';
+import { useSelector } from 'react-redux';
 import { addReviewToItem } from '../utils/index';
 import { isError } from '../utils/index';
 import Error from '../components/Error';

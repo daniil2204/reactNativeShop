@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity,SafeAreaView } from 'react-native';
+import { StyleSheet,SafeAreaView } from 'react-native';
 import { useSelector } from 'react-redux';
 import Header from './layoutComponents/Header';
 import Footer from './layoutComponents/Footer';

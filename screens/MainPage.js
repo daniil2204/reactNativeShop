@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View,RefreshControl,ScrollView } from 'react-native';
+import { StyleSheet, View,RefreshControl,ScrollView } from 'react-native';
 import InputLink from '../components/input/InputLink';
 import ItemList from '../components/item/ItemList';
 import { useCallback } from 'react';

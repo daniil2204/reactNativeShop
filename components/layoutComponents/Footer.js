@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 import { Link, useRoute } from '@react-navigation/native';
 
-export default function Footer({navigation}) {
+export default function Footer() {
     return (
         <View style={styles.container}>
             

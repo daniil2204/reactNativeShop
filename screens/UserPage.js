@@ -1,15 +1,22 @@
-import { StyleSheet, Text, View,SafeAreaView,ScrollView,FlatList } from 'react-native';
+import { StyleSheet, Text, View,FlatList,TouchableOpacity } from 'react-native';
 import { useSelector,useDispatch } from 'react-redux';
+import { logOut } from '../redux/userSlice';
 
 
 export default function UserPage({ navigation }) {
 
   const {username,phone,email} = useSelector(state => state.user.data);
+  const dispatch = useDispatch()
 
   const titleObj = {
     "Ім'я":username,
     "Телефон":phone,
     "Пошта":email
+  };
+
+  const exit = () => {
+    navigation.navigate('Main');
+    dispatch(logOut());
   }
 
   const renderInfo = (title) => {
@@ -25,12 +32,18 @@ export default function UserPage({ navigation }) {
 
     <View style={styles.container}>
       <Text style={styles.textHeader}>Особистий кабінет</Text>
-      <FlatList
-        data={["Ім'я","Телефон","Пошта"]}
-        renderItem={renderInfo}
-        keyExtractor={item => item}
-      />
-      
+      <View>
+        <FlatList
+          data={["Ім'я","Телефон","Пошта"]}
+          renderItem={renderInfo}
+          keyExtractor={item => item}
+        />
+      </View>
+      <View style={{alignItems:'center'}}>
+        <TouchableOpacity style={styles.btn} onPress={exit}>
+          <Text style={styles.title}>Вийти</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -59,5 +72,14 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     color:'white'
+  },
+  btn: {
+    width:"80%",
+    height:70,
+    backgroundColor:'green',
+    borderRadius:10,
+    justifyContent:'center',
+    alignItems:'center',
+    marginTop:35
   }
 });
